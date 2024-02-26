@@ -1,39 +1,28 @@
 package com.example.aptonia;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.toolbox.Volley;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.aptonia.addFragment.AddFragment;
 import com.example.aptonia.cloud.Cloud;
-import com.example.aptonia.cloud.VolleyCallBack;
 import com.example.aptonia.cloud.WebLoader;
 import com.example.aptonia.expirationTable.ExpirationTable;
-import com.example.aptonia.expirationTable.NameItem;
 import com.example.aptonia.manageFragment.ManageFragment;
 import com.example.aptonia.scheduleFragment.ScheduleFragment;
-import com.example.aptonia.settingFragment.SettingsFragment;
 import com.example.aptonia.storage.FileManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     //TODO: dodelat dark mode
@@ -50,10 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        if (android.os.Build.VERSION.SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -79,12 +66,10 @@ public class MainActivity extends AppCompatActivity {
         AddFragment addFragment = new AddFragment(cloud, expirationTable, new FileManager(this, itemsToInsertFileName));
         ScheduleFragment scheduleFragment = new ScheduleFragment(cloud, expirationTable);
         ManageFragment manageFragment = new ManageFragment(cloud, expirationTable);
-        //SettingsFragment settingsFragment = new SettingsFragment();
 
         meowBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_baseline_add_24));
         meowBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_baseline_calendar_month_24));
         meowBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_storage_24));
-        //meowBottomNavigationView.add(new MeowBottomNavigation.Model(4, R.drawable.ic_baseline_settings_24));
 
         meowBottomNavigationView.setOnShowListener(model -> {
             Fragment fragment = null;
@@ -103,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 case 1: fragment = addFragment; break;
                 case 2: fragment = scheduleFragment; break;
                 case 3: fragment = manageFragment; break;
-                //case 4: fragment = settingsFragment; break;
             }
 
             assert fragment != null;

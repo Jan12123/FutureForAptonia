@@ -16,7 +16,5 @@ dependencyResolutionManagement {
     }
 }
 
-//apply plugin: 'com.android.application'
-
 rootProject.name = "Aptonia"
 include ':app'
