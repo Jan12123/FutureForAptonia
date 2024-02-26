@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "533044995002",
+    "project_id": "celestial-baton-362912",
+    "storage_bucket": "celestial-baton-362912.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533044995002:android:3b44698a18ae40be247383",
+        "android_client_info": {
+          "package_name": "com.example.aptonia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533044995002-vvhfveie4vf12tjhppktvp28hudkl7em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYa9BsH4D7xgAQ8JTIf9EzAywASkLMTZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533044995002-vvhfveie4vf12tjhppktvp28hudkl7em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

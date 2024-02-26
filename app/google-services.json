@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "14426388944",
+    "project_id": "aptonia",
+    "storage_bucket": "aptonia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14426388944:android:ff8f3c9a234c163f5b21d5",
+        "android_client_info": {
+          "package_name": "com.example.aptonia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14426388944-iohk6okh1fr5l01apofg029c4hdd9od9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aptonia",
+            "certificate_hash": "606a3de3c2bc576c4faa73b8cfcd691a6e461877"
+          }
+        },
+        {
+          "client_id": "14426388944-t86em9hlhicpl36t61pq6p115clgd3fq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKPJisJ9GtvyJ3O7dcN1XJFsa_DzQvqyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14426388944-t86em9hlhicpl36t61pq6p115clgd3fq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

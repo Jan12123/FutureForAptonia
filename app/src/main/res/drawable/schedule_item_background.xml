@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@integer/material_motion_duration_short_1">
+    <item>
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:topRightRadius="50dp"
+                android:topLeftRadius="50dp"/>
+            <stroke android:color="@color/gray" android:width="2dp" />
+        </shape>
+    </item>
+</selector>
