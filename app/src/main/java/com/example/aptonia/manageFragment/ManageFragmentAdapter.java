@@ -31,7 +31,7 @@ public class ManageFragmentAdapter extends RecyclerView.Adapter<ManageFragmentVi
     @NonNull
     @Override
     public ManageFragmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ManageFragmentViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_fragment_item_layout, parent, false), expirationTable, context);
+        return new ManageFragmentViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_fragment_item_layout, parent, false));
     }
 
     @Override

@@ -15,6 +15,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class WebLoader {
+    public static final String defaultImage = "https://prints.ultracoloringpages.com/9b4fb3c9b191bbd3a81b415c19efa857.png";
+
     public static RequestQueue queue;
     public static String barcodeRFIDClass;
     public static String idQRClass;
@@ -24,9 +26,12 @@ public class WebLoader {
     public static String testIdQRClass;
     public static String testNotFoundClass;
 
+    // Load image of product to image view using product ID
     public static void loadImageFromDecathlon(Context context, String id, ImageView imageView) {
         if (id.equals("")) {
-            id = "1234567";
+            Picasso.get().load(defaultImage).into(imageView);
+
+            return;
         }
 
         Log.d("id", id);
@@ -49,6 +54,7 @@ public class WebLoader {
         }).execute();
     }
 
+    // Builds command to execute
     public static Loader using(Context context) {
         return new Loader(context);
     }
@@ -81,15 +87,25 @@ public class WebLoader {
                 process();
             }
             else {
-                callBack.onFailure("", "", "");
+                callBack.onFailure("", "", defaultImage);
             }
         }
 
+        // Load HTML page from Decathlon web and get ID, name, IMG URL
         private void process() {
             Log.d("execute", "https://www.decathlon.cz/search?Ntt=" + nttCommand);
 
             WebLoader.queue.add(new StringRequest("https://www.decathlon.cz/search?Ntt=" + nttCommand, response -> {
                 Document document = Jsoup.parse(response);
+
+                // Each barcode type passing to Ntt return different page
+                // In that case I need to recognize them
+                // Each Class is unique for different barcode typ and can be found in only one page type
+
+                // That means if the Decathlon web becomes different (the CSS classes change their names)
+                // this part of code stops to work correctly and I must change the dataClasses in Internal Google sheet
+                // For that case there are the error functions
+                // If error function is shown in Toast message, it is clear I have to change the classes manually
 
                 if (!document.getElementsByClass(notFoundClass).isEmpty()) {
                     Elements elements1 = document.getElementsByClass(barcodeRFIDClass);
@@ -101,7 +117,7 @@ public class WebLoader {
                         return;
                     }
 
-                    callBack.onFailure("", "", "https://prints.ultracoloringpages.com/9b4fb3c9b191bbd3a81b415c19efa857.png");
+                    callBack.onFailure("", "", defaultImage);
 
                     return;
                 }
@@ -162,7 +178,7 @@ public class WebLoader {
         private void error(String place) {
             Toast.makeText(context, "Error: " + place, Toast.LENGTH_SHORT).show();
 
-            callBack.onFailure("", "", "https://prints.ultracoloringpages.com/9b4fb3c9b191bbd3a81b415c19efa857.png");
+            callBack.onFailure("", "", defaultImage);
         }
 
         private static String parseQR(String qr) {
@@ -173,6 +189,8 @@ public class WebLoader {
             return qr.split("/qr/")[1].split("/")[0];
         }
 
+        // Parses barcode by its type
+        // Each barcode type has its unique characteristics, so it is not that hard to do that
         public static String parseBarcode(String nttCommand) {
             if (parseQR(nttCommand) != null) {
                 return parseQR(nttCommand);

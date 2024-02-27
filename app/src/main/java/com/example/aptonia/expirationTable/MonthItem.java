@@ -2,6 +2,7 @@ package com.example.aptonia.expirationTable;
 
 import java.util.ArrayList;
 
+// Data class
 public class MonthItem {
 
     private final ArrayList<DateItem> dateItems;

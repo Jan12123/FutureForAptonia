@@ -39,17 +39,15 @@ public class ManageFragment extends Fragment {
     Cloud cloud;
     ExpirationTable expirationTable;
     Context context;
-    List<Item> filteredText;
 
     RecyclerView recyclerView;
     ManageFragmentAdapter manageFragmentAdapter;
     LinearLayoutManager linearLayoutManager;
 
+    // Shows all items names and its IDs
     public ManageFragment(Cloud cloud, ExpirationTable expirationTable) {
         this.cloud = cloud;
         this.expirationTable = expirationTable;
-
-        this.filteredText = new ArrayList<>(expirationTable.getNamesAndIds());
     }
 
     @Override

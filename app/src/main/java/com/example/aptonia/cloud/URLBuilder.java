@@ -3,12 +3,10 @@ package com.example.aptonia.cloud;
 import android.util.Log;
 
 import com.example.aptonia.StartLoadingActivity;
-import com.example.aptonia.expirationTable.Date;
 import com.example.aptonia.expirationTable.DateItem;
 import com.example.aptonia.expirationTable.NameItem;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class URLBuilder {
 
@@ -18,9 +16,7 @@ public class URLBuilder {
     private ArrayList<NameItem> data;
     private String[] classes;
 
-    /**
-     * @param scriptURL must include "/exec" and exclude "?"
-     */
+    // Builder for creating Cloud commands to execute
     public URLBuilder(String scriptURL) {
         this.scriptURL = scriptURL + "?";
 
@@ -86,25 +82,28 @@ public class URLBuilder {
         return URL.toString();
     }
 
-    String separator = "*";
+    private static final String nameItemSeparator = ";";
+    private static final String nameItemDataSeparator = "*";
+    private static final String datesSeparator = ".";
 
+    // Creates HTTP string request from URLBuilder data
     private String generateDataCommand() {
         StringBuilder result = new StringBuilder();
 
         for (NameItem nameItem : data) {
             result.append(nameItem.getID())
-                    .append(separator).append(Cloud.stringWithoutSpaces(nameItem.getName()));
+                    .append(nameItemDataSeparator).append(Cloud.stringWithoutSpaces(nameItem.getName()));
 
             for (DateItem item : nameItem.getDateItems()) {
-                result.append(separator)
+                result.append(nameItemDataSeparator)
                         .append(item.getDayNumber())
-                        .append(".")
+                        .append(datesSeparator)
                         .append(item.getMonthNumber())
-                        .append(".")
+                        .append(datesSeparator)
                         .append(item.getYear());
             }
 
-            result.append(";");
+            result.append(nameItemSeparator);
         }
 
         return result.toString();

@@ -37,6 +37,7 @@ import java.util.Arrays;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+// Activity for recognizing RFID, QR or simple barcode
 public class BarcodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private MaterialButton backButton;
@@ -48,6 +49,8 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
     private static ExpirationTable expirationTable;
     private static VolleyCallBack volleyCallBack;
+
+    // Stores boolean if the activity can offer manual search option
     private static boolean showManualSearchOption;
 
     @Override
@@ -61,6 +64,8 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         progressBar = findViewById(R.id.barcode_progress_bar);
         manualSearchLayout = findViewById(R.id.barcode_activity_manual_search_layout);
         manualSearchButton = findViewById(R.id.barcode_activity_manual_search_button);
+
+        // Open manual search activity in case it is not possible to detect code or the product is not in database
         manualSearchButton.setOnClickListener(v1 -> ManualSearch.getItem(BarcodeActivity.this, barcodeData, expirationTable, new VolleyCallBack() {
             @Override
             public void onSuccess(Object... o) {
@@ -138,6 +143,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
     private boolean called = false;
 
+    // After barcode detection this function is called
     private synchronized void process() {
         Log.d("detections", barcodeData);
 
@@ -157,6 +163,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
         progressBar.setVisibility(View.VISIBLE);
 
+        // Get data from Decathlon web
         WebLoader.using(BarcodeActivity.this).find(barcodeData).withResponse(new VolleyCallBack() {
             @Override
             public void onSuccess(Object... o) {
@@ -195,8 +202,6 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
 
                 called = false;
 
-                //Toast.makeText(BarcodeActivity.this, "Product wasn't found", Toast.LENGTH_SHORT).show();
-
                 if (showManualSearchOption) {
                     if (barcodeData.contains("(")) {
                         barcodeData = barcodeData.split("\\(")[1].substring(4);
@@ -230,6 +235,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         Animatoo.INSTANCE.animateZoom(context);
     }
 
+    // Process Barcode detector result
     @Override
     public void handleResult(Result rawResult) {
         if (showManualSearchOption) {

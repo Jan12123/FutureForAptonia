@@ -19,6 +19,7 @@ import com.example.aptonia.cloud.WebLoader;
 import com.example.aptonia.expirationTable.DateItem;
 import com.example.aptonia.expirationTable.ExpirationTable;
 
+// ViewHolder of DateItem
 public class ScheduleFragmentItem extends RecyclerView.ViewHolder {
 
     public TextView date;
@@ -49,8 +50,7 @@ public class ScheduleFragmentItem extends RecyclerView.ViewHolder {
 
         background = itemView.findViewById(R.id.schedule_fragment_background_view);
 
-        //https://api-eu.decathlon.net/stockcontrol-bff/v3/graphql/2011/model-info
-
+        // to remove item from database: long click for dialog then confirm
         itemView.setOnLongClickListener(v -> {
             Builder.DIALOG.removeItemDialog(context, name.getText().toString(), expirationTable.findID(name.getText().toString()), date.getText().toString(), v1 -> {
                 String[] date = displayedDate.split("\\.");
@@ -90,7 +90,5 @@ public class ScheduleFragmentItem extends RecyclerView.ViewHolder {
 
     public void setID(String id) {
         this.displayedID = id;
-
-        //this.id.setText("ID: " + id);
     }
 }

@@ -17,6 +17,7 @@ public class AddFragmentViewHolder extends RecyclerView.ViewHolder {
 
     RecyclerView recyclerView;
 
+    // Stores Views in AddFragmentItemLayout
     public AddFragmentViewHolder(@NonNull View itemView) {
         super(itemView);
 

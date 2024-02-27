@@ -25,16 +25,15 @@ import com.example.aptonia.scheduleFragment.ScheduleFragment;
 import com.example.aptonia.storage.FileManager;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO: dodelat dark mode
+    // TODO: pokracovat u Barcode activity
 
     MeowBottomNavigation meowBottomNavigationView;
-
     Cloud cloud;
-
     ExpirationTable expirationTable;
 
     int lastFragmentId = 2;
 
+    // Main program
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -51,14 +50,17 @@ public class MainActivity extends AppCompatActivity {
         String rawItems = intent.getStringExtra("items");
         String itemsToInsertFileName = intent.getStringExtra("itemsToInsertFileName");
 
+        // Init expiration table (main local database of APP)
         this.expirationTable = new ExpirationTable(rawItems);
 
         Log.d("dateItems", expirationTable.getDateItems().toString());
 
         Log.d("MainActivityItems", String.valueOf(expirationTable));
 
+        // Init cloud (Google APPS Script API)
         cloud = new Cloud(getApplicationContext(), cloudURL, expirationTable);
 
+        // Setup Bottom Navigation Bar
         WebLoader.queue = Volley.newRequestQueue(this);
 
         meowBottomNavigationView = findViewById(R.id.bottom_meow_navigation);

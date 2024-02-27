@@ -32,6 +32,7 @@ public class AddFragmentItemAdapter extends RecyclerView.Adapter<AddFragmentItem
         this.itemsToInsert = itemsToInsert;
         this.adapter = adapter;
 
+        // sort dates by closest to oldest
         nameItem.getDateItems().sort((di1, di2) -> {
             if (Integer.parseInt(di1.getYear()) > Integer.parseInt(di2.getYear())) {
                 return 1;
@@ -69,10 +70,8 @@ public class AddFragmentItemAdapter extends RecyclerView.Adapter<AddFragmentItem
 
         int dayRemaining = Days.daysBetween(DateTime.now().withTimeAtStartOfDay(), dateTime.withTimeAtStartOfDay()).getDays() + 1;
 
-        if (dayRemaining < 0) {
-            holder.date.setBackgroundResource(R.drawable.item_layout_date_caution);
-        }
-        else if (dayRemaining < 7) {
+        // Colors background by remaining dates, so people can notice them better
+         if (dayRemaining < 7) {
             holder.date.setBackgroundResource(R.drawable.item_layout_date_caution);
         }
         else if (dayRemaining < 14) {

@@ -1,11 +1,11 @@
 package com.example.aptonia.expirationTable;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Date;
 
+// Data class
 public class DateItem extends Item {
 
     private String dayName;
@@ -44,7 +44,6 @@ public class DateItem extends Item {
 
     public void setDayNumber(String dayNumber) {
         this.dayNumber = dayNumber;
-        //this.dayName = getDayName(new Date());
     }
 
     public void setMonthNumber(String monthNumber) {
@@ -187,19 +186,6 @@ public class DateItem extends Item {
         calendar.setTime(day);
         return getDayShortName(calendar.get(Calendar.DAY_OF_WEEK));
     }
-
-    /*@Override
-    public String toString() {
-        return "DateItem{" +
-                "dayName='" + dayName + '\'' +
-                ", dayNumber='" + dayNumber + '\'' +
-                ", monthName='" + monthName + '\'' +
-                ", monthNumber='" + monthNumber + '\'' +
-                ", year='" + year + '\'' +
-                ", name='" + name + '\'' +
-                ", ID='" + ID + '\'' +
-                '}';
-    }*/
 
     @Override
     public String toString() {

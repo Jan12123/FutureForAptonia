@@ -16,6 +16,7 @@ public class Security {
     private final String scriptURL;
     private final RequestQueue requestQueue;
 
+    // Communicates with security script
     public Security(Context context, String scriptURL) {
         this.context = context;
         this.scriptURL = scriptURL;

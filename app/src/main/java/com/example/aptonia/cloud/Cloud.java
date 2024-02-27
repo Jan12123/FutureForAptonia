@@ -25,6 +25,7 @@ public class Cloud {
     private final RequestQueue requestQueue;
     private final ExpirationTable expirationTable;
 
+    // Can trigger Google APPS script to return data or push data through it
     public Cloud(Context context, String scriptURL, ExpirationTable expirationTable) {
         this.scriptURL = scriptURL;
         this.expirationTable = expirationTable;
@@ -33,6 +34,7 @@ public class Cloud {
         this.requestQueue.start();
     }
 
+    // To make commands execute serially (eliminates Google sheet mistakes)
     private static RequestQueue prepareSerialRequestQueue(Context context) {
         File cacheFile = new File(context.getCacheDir(), "volley");
 
@@ -45,7 +47,7 @@ public class Cloud {
         return queue;
     }
 
-    public void addItem(Context context, ArrayList<NameItem> nameItems, VolleyCallBack callBack) {
+    public void addItem(ArrayList<NameItem> nameItems, VolleyCallBack callBack) {
         if (expirationTable != null) {
             nameItems = controlDates(nameItems);
         }
@@ -101,6 +103,7 @@ public class Cloud {
                 .getURL(), callBack::onSuccess , callBack::onFailure));
     }
 
+    // Not working yet
     public void setAptoniaDecathlonDataClasses(VolleyCallBack callBack, String barcodeRFIDClass, String idQRClass, String notFoundClass) {
         requestQueue.add(new StringRequest(Request.Method.POST, new URLBuilder(scriptURL)
                 .setAction(URLBuilder.ScriptAction.SET_APTONIA_DECATHLON_DATA_CLASSES)
@@ -108,6 +111,8 @@ public class Cloud {
                 .getURL(), callBack::onSuccess, callBack::onFailure));
     }
 
+    // Deprecated
+    // Data are send using Security script to make the whole process of initializing and communication with Script way more faster
     public void getItems(VolleyCallBack callBack) {
         requestQueue.add(new StringRequest(Request.Method.GET, new URLBuilder(scriptURL)
                 .setAction(URLBuilder.ScriptAction.GET_DATA)

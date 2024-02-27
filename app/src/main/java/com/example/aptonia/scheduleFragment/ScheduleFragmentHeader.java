@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aptonia.R;
 
+// ViewHolder of Header
 public class ScheduleFragmentHeader extends RecyclerView.ViewHolder {
 
     TextView titleTextView;

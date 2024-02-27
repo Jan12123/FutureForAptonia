@@ -19,8 +19,11 @@ import org.joda.time.Days;
 
 import java.util.ArrayList;
 
+// RecyclerView.Adapter is class that manages RecyclerView.ViewHolder (one from list) in recycler view (load data to it when user scroll to their position)
 public class ScheduleFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    // This RecyclerView has multiple ViewHolders
+    // ID for the ViewHolders
     private static final int header = 11;
     private static final int item = 12;
 
@@ -47,6 +50,7 @@ public class ScheduleFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
         return viewTypes.get(position);
     }
 
+    // Creating data when shown
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,6 +61,7 @@ public class ScheduleFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
         return new ScheduleFragmentItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_fragment_recyclerview_item, parent, false), context, cloud, expirationTable, ScheduleFragmentAdapter.this);
     }
 
+    // Loading data when shown
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
@@ -99,8 +104,6 @@ public class ScheduleFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
                 itemView.setID(dateItem.getID());
 
                 int dayRemaining = Days.daysBetween(DateTime.now(), new DateTime(year, month, day, 0, 0, 0,0)).getDays() + 1;
-
-                //itemView.daysLeft.setText("Days remaining: " + dayRemaining);
 
                 if (dayRemaining < 7) {
                     itemView.background.setBackgroundResource(R.drawable.item_layout_date_caution);

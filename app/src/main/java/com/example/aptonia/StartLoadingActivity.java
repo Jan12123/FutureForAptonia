@@ -35,18 +35,20 @@ public class StartLoadingActivity extends AppCompatActivity {
     String itemsToInsertFileName = "productsToUpload.txt";
     Security security;
 
+    // Begin of program
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Suppress NIGHT_MODE
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_loading);
 
-        //Toast.makeText(this, mobileID, Toast.LENGTH_SHORT).show();
-
+        // Set Version texts
         ((TextView) findViewById(R.id.version_name)).setText(appVersionName);
         ((TextView) findViewById(R.id.version_id)).setText(appVersionID);
 
+        // Trigger security script on Google to get necessary data for continue
         new Security(this, securityURL).getAptoniaData(new VolleyCallBack() {
             @Override
             public void onSuccess(Object... o) {
@@ -82,7 +84,10 @@ public class StartLoadingActivity extends AppCompatActivity {
         });
     }
 
+    // Ends activity start activity and starts MainActivity
     private void endActivity() {
+        // Intent is class where data during activities change can be stored
+        // Allows us not to create separate data class and use it as simple data bridge between two activities
         Intent intent = new Intent(StartLoadingActivity.this, MainActivity.class);
 
         intent.putExtra("items", items);
@@ -91,6 +96,7 @@ public class StartLoadingActivity extends AppCompatActivity {
 
         startActivity(intent);
 
+        // Animates activities change
         Animatoo.INSTANCE.animateZoom(this);
 
         Log.d("endActivity", "end");

@@ -1,5 +1,6 @@
 package com.example.aptonia.expirationTable;
 
+// Data class
 public class Item {
     protected String name;
     protected String ID;

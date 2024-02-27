@@ -29,19 +29,14 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 public class ScheduleFragment extends Fragment {
-
     ExpirationTable expirationTable;
-
     Cloud cloud;
-
     RecyclerView recyclerView;
-
     LinearLayoutManager linearLayoutManager;
-
     ScheduleFragmentAdapter adapter;
-
     Context context;
 
+    // For showing items in database using RecyclerView
     public ScheduleFragment(Cloud cloud, ExpirationTable expirationTable) {
         this.cloud = cloud;
         this.expirationTable = expirationTable;
@@ -75,6 +70,7 @@ public class ScheduleFragment extends Fragment {
         return view;
     }
 
+    // You can choose the way of showing items via RadioButtons (by date of expiration or by name)
     AppCompatButton buttonDate;
     AppCompatButton buttonName;
 

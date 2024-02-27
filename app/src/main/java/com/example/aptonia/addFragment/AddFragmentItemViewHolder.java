@@ -38,6 +38,7 @@ public class AddFragmentItemViewHolder extends RecyclerView.ViewHolder {
         date = itemView.findViewById(R.id.add_fragment_name_item_layout_date);
         daysLeft = itemView.findViewById(R.id.add_fragment_name_item_layout_days_left);
 
+        // Removes on longCLick with confirmed Dialog
         itemView.setOnLongClickListener(v -> {
             Builder.DIALOG.areYouSureDialog(context, "Confirm delete", "Are you sure you want to detele this date?", v12 -> {
                 int index = getDateItem(date.getText().toString());

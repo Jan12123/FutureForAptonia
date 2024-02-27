@@ -1,46 +1,29 @@
 package com.example.aptonia.builder;
 
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.aptonia.BarcodeActivity;
 import com.example.aptonia.MainActivity;
 import com.example.aptonia.R;
-import com.example.aptonia.addFragment.AddFragmentAdapter;
 import com.example.aptonia.cloud.VolleyCallBack;
 import com.example.aptonia.cloud.WebLoader;
 import com.example.aptonia.expirationTable.DateItem;
-import com.example.aptonia.expirationTable.ExpirationTable;
 import com.example.aptonia.expirationTable.NameItem;
-import com.example.aptonia.storage.FileManager;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Builder {
 
@@ -283,50 +266,6 @@ public class Builder {
 
             return removeDialog;
         }
-
-        /*public static class ProgressDialog extends Dialog {
-
-            TextView textProgress;
-
-            ProgressBar progressBar;
-
-            ProgressBarStatus status;
-
-            public ProgressDialog(@NonNull Context context, ProgressBarStatus status) {
-                super(context);
-
-                this.status = status;
-            }
-
-            public void add(int count) {
-                status.setCurrent(status.getCurrent() + count);
-
-                textProgress.setText(status.getCurrent() + " of " + status.getMax());
-
-                setProgressAnimate(progressBar, status.getCurrent());
-            }
-
-            private void setProgressAnimate(ProgressBar progressBar, int progressTo) {
-                ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), progressTo)
-                        .setDuration(250)
-                        .start();
-            }
-
-            public void prepare() {
-                progressBar.setMax(status.getMax());
-                progressBar.setProgress(status.getCurrent());
-
-                textProgress.setText(status.getCurrent() + " of " + status.getMax());
-            }
-
-            public void endDialog() {
-                textProgress.setText(status.getMax() + " of " + status.getMax());
-
-                setProgressAnimate(progressBar, status.getMax());
-
-                new Handler().postDelayed(this::dismiss, 300);
-            }
-        }*/
 
     }
 

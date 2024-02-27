@@ -21,6 +21,7 @@ public class ExpirationTable {
     private final List<MonthItem> rangeItems;
     private final List<Item> namesAndIds;
 
+    // Programs database
     public ExpirationTable(String rawItems) {
         this.dateItems = new ArrayList<>();
         this.monthItems = new ArrayList<>();
@@ -30,12 +31,13 @@ public class ExpirationTable {
 
         parseRawItemsToDateItems(rawItems);
 
-        castItemsToMonthItems(dateItems, monthItems);
-        castItemsToNameItems(dateItems, nameItems);
+        castItemsToMonthItems(monthItems);
+        castItemsToNameItems(nameItems);
 
         Log.d("ids", String.valueOf(getIDs()));
     }
 
+    // remove Item from database
     public void remove(String id, String day, String month, String year) {
         for (DateItem dateItem : dateItems) {
             if (!dateItem.getID().equals(id)) {
@@ -52,26 +54,7 @@ public class ExpirationTable {
         }
     }
 
-    private void castItemsToNameAndIds() {
-        for (DateItem dateItem : dateItems) {
-            Item item = new Item(dateItem.getName(), dateItem.getID());
-
-            if (!findItem(item)) {
-                namesAndIds.add(item);
-            }
-        }
-    }
-
-    private boolean findItem(Item item) {
-        for (Item tmp : namesAndIds) {
-            if (tmp.name.equals(item.name) && tmp.getID().equals(item.getID())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    // parse string database from HTTP response of APPS Script to ArrayList of DateItems
     private void parseRawItemsToDateItems(String rawItems) {
         if (rawItems == null || rawItems.equals("")) {
             return;
@@ -104,15 +87,16 @@ public class ExpirationTable {
             else {
                 itemID = cells[i++];
                 itemName = cells[i];
+
                 namesAndIds.add(new Item(itemName, itemID));
             }
         }
     }
 
-    private void castItemsToNameItems(List<DateItem> source, List<NameItem> target) {
+    private void castItemsToNameItems(List<NameItem> target) {
         target.clear();
 
-        for (DateItem dateItem : source) {
+        for (DateItem dateItem : dateItems) {
             if (findNameItem((ArrayList<NameItem>) target, dateItem.getName()) == -1) {
                 target.add(new NameItem(dateItem.getName(), dateItem.getID()));
             }
@@ -133,7 +117,7 @@ public class ExpirationTable {
         return -1;
     }
 
-    private void castItemsToMonthItems(List<DateItem> source, List<MonthItem> target) {
+    private void castItemsToMonthItems(List<MonthItem> target) {
         monthItems.clear();
 
         for (DateItem dateItem : dateItems) {
@@ -219,12 +203,6 @@ public class ExpirationTable {
         return nameItems;
     }
 
-    public List<MonthItem> getRangeItems(DateTime start, DateTime end) {
-        castMonthItemToRangeItems(start, end);
-
-        return rangeItems;
-    }
-
     public List<String> getNames() {
         List<String> names = new ArrayList<>();
 
@@ -280,8 +258,6 @@ public class ExpirationTable {
                 if (dateItem.equals(dateItem1)) {
                     ok = false;
                 }
-
-               // Log.d("a - b = " + dateItem.equals(dateItem1), dateItem.toString() + " x " + dateItem1.toString());
             }
 
             if (ok) {
@@ -314,15 +290,9 @@ public class ExpirationTable {
         return null;
     }
 
-    public void change(int index, DateItem dateItem) {
-        dateItems.set(index, dateItem);
-
-        refresh();
-    }
-
     private void refresh() {
-        castItemsToMonthItems(dateItems, monthItems);
-        castItemsToNameItems(dateItems, nameItems);
+        castItemsToMonthItems(monthItems);
+        castItemsToNameItems(nameItems);
     }
 
     @NonNull

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/schedule_fragment_remove_item_dialog"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"

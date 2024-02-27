@@ -20,6 +20,7 @@ public class FileManager {
     Context context;
     String fileName;
 
+    // Class for managing pseudo-local database (just a .txt file storing items, which were not uploaded to Google sheet)
     public FileManager(Context context, String fileName) {
         this.context = context;
         this.fileName = fileName;

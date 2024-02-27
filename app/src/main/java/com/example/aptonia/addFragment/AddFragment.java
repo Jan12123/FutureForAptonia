@@ -1,6 +1,5 @@
 package com.example.aptonia.addFragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -23,18 +22,19 @@ import com.example.aptonia.R;
 import com.example.aptonia.builder.Builder;
 import com.example.aptonia.cloud.Cloud;
 import com.example.aptonia.cloud.VolleyCallBack;
-import com.example.aptonia.expirationTable.DateItem;
 import com.example.aptonia.expirationTable.ExpirationTable;
 import com.example.aptonia.expirationTable.NameItem;
 import com.example.aptonia.storage.FileManager;
 import com.google.android.material.button.MaterialButton;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+// Fragment is screen with shared context (having so many Activities is slow and not effective)
+// One activity can have several fragments
+
+// This one for getting data and then save them to the database and Google sheets
 public class AddFragment extends Fragment {
 
     ExpirationTable expirationTable;
@@ -51,57 +51,15 @@ public class AddFragment extends Fragment {
     AddFragmentAdapter addFragmentAdapter;
     LinearLayoutManager linearLayoutManager;
 
-    Random random = new Random();
-
     public AddFragment(Cloud cloud, ExpirationTable expirationTable, FileManager fileManager) {
         this.cloud = cloud;
         this.expirationTable = expirationTable;
         this.fileManager = fileManager;
 
-        //fileManager.clearData();
-
         this.itemsToInsert = fileManager.loadData();
-
-        /*for (int i = 0; i < 50; i++) {
-            NameItem nameItem = new NameItem(generateString(), generateInt());
-
-            for (int j = 0; j < 4; j++) {
-                nameItem.getDateItems().add(new DateItem(
-                        nameItem.getName(),
-                        nameItem.getID(),
-                        random.nextInt(20) + 1,
-                        random.nextInt(12) + 1,
-                        random.nextInt(50) + 2024));
-            }
-
-            itemsToInsert.add(nameItem);
-        }*/
     }
 
-    private String generateString() {
-        String abc = "abcdefghijklmnopqrstuvwxyz";
-
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < 10; i++) {
-            result.append(abc.charAt(random.nextInt(abc.length())));
-        }
-
-        return result.toString();
-    }
-
-    private String generateInt() {
-        String abc = "0123456789";
-
-        StringBuilder result = new StringBuilder("1");
-
-        for (int i = 0; i < 6; i++) {
-            result.append(abc.charAt(random.nextInt(abc.length())));
-        }
-
-        return result.toString();
-    }
-
+    // Get parents (root activity) context
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -115,6 +73,7 @@ public class AddFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
+        // Init RecyclerView (views allows us to scroll content effectively and save memory)
         addFragmentAdapter = new AddFragmentAdapter(view.getContext(), expirationTable, itemsToInsert);
         linearLayoutManager = new LinearLayoutManager(view.getContext());
 
@@ -139,9 +98,12 @@ public class AddFragment extends Fragment {
 
             save.setVisibility(View.GONE);
             clear.setVisibility(View.GONE);
+
             progressBar.setVisibility(View.VISIBLE);
 
-            Builder.DIALOG.areYouSureDialog(context, "Confirm upload", "Are you sure you want to upload items?", v13 -> cloud.addItem(context, itemsToInsert, new VolleyCallBack() {
+            // Dialog is even less then fragment
+            // It is small screen on fragment or activity (make background darker and is shown)
+            Builder.DIALOG.areYouSureDialog(context, "Confirm upload", "Are you sure you want to upload items?", v13 -> cloud.addItem(itemsToInsert, new VolleyCallBack() {
                 @Override
                 public void onSuccess(Object... o) {
                     Log.d("saveDate", "save");
@@ -191,6 +153,7 @@ public class AddFragment extends Fragment {
             save.setVisibility(View.GONE);
             clear.setVisibility(View.GONE);
 
+            // Starts Barcode Activity and get data from barcode
             BarcodeActivity.getItem(context, expirationTable, true, new VolleyCallBack() {
                 @Override
                 public void onSuccess(Object... o) {
@@ -212,6 +175,7 @@ public class AddFragment extends Fragment {
             return true;
         });
 
+        // For RecyclerView items swiping events
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -267,15 +231,15 @@ public class AddFragment extends Fragment {
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addSwipeLeftLabel("Add")
-                        .setSwipeLeftLabelColor(getResources().getColor(R.color.black))
+                        .setSwipeLeftLabelColor(getResources().getColor(R.color.black, context.getTheme()))
                         .addSwipeLeftActionIcon(R.drawable.ic_baseline_add_24)
-                        .setSwipeLeftActionIconTint(getResources().getColor(R.color.black))
-                        .addSwipeLeftBackgroundColor(getResources().getColor(R.color.green))
+                        .setSwipeLeftActionIconTint(getResources().getColor(R.color.black, context.getTheme()))
+                        .addSwipeLeftBackgroundColor(getResources().getColor(R.color.green, context.getTheme()))
                         .addSwipeRightLabel("Remove")
-                        .setSwipeRightLabelColor(getResources().getColor(R.color.black))
+                        .setSwipeRightLabelColor(getResources().getColor(R.color.black, context.getTheme()))
                         .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_24)
-                        .setSwipeRightActionIconTint(getResources().getColor(R.color.black))
-                        .addSwipeRightBackgroundColor(getResources().getColor(R.color.red))
+                        .setSwipeRightActionIconTint(getResources().getColor(R.color.black, context.getTheme()))
+                        .addSwipeRightBackgroundColor(getResources().getColor(R.color.red, context.getTheme()))
                         .create()
                         .decorate();
 

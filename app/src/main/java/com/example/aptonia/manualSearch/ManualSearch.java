@@ -31,9 +31,9 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
+// In case product cannot be scanned, it is possible to find it manually via this activity
 public class ManualSearch extends AppCompatActivity {
 
-    private static Context context;
     private static String barcode;
     private static ExpirationTable expirationTable;
     private static VolleyCallBack callBack;
@@ -73,7 +73,9 @@ public class ManualSearch extends AppCompatActivity {
 
             }
         });
+
         nameEditText = this.findViewById(R.id.manual_search_name_edit_text);
+
         confirm = this.findViewById(R.id.manual_search_confirm);
         confirm.setOnClickListener(v1 -> {
             String id = idEditText.getText().toString();
@@ -105,24 +107,22 @@ public class ManualSearch extends AppCompatActivity {
             return;
         }
 
-        try {
-            if (barcode.contains("qr")) {
-                barcodeView.setImageBitmap(encodeAsBitmap(barcode, BarcodeFormat.QR_CODE, 400, 400));
-            }
-            else {
-                barcodeView.setImageBitmap(encodeAsBitmap(barcode, BarcodeFormat.CODE_128, 800, 100));
-            }
-        } catch (WriterException e) {
-            e.printStackTrace();
-
-            barcodeView.setBackgroundColor(getColor(R.color.gray));
+        // If you were trying to scan it but system does not know the item Barcode
+        // this code tries to generate QR or standart barcode, which can be easily scanned with Decathlon
+        // internal APP, then you can type the product ID and name to this activity and find it
+        if (barcode.contains("qr")) {
+            barcodeView.setImageBitmap(encodeAsBitmap(barcode, BarcodeFormat.QR_CODE, 400, 400));
+        }
+        else {
+            barcodeView.setImageBitmap(encodeAsBitmap(barcode, BarcodeFormat.CODE_128, 800, 100));
         }
     }
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
 
-    private static Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
+    // Generates Bitmap of Barcode or QR code
+    private static Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) {
         if (contents == null) {
             return null;
         }
@@ -142,7 +142,7 @@ public class ManualSearch extends AppCompatActivity {
 
         try {
             result = writer.encode(contents, format, img_width, img_height, hints);
-        } catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException | WriterException iae) {
             return null;
         }
 
@@ -153,6 +153,7 @@ public class ManualSearch extends AppCompatActivity {
 
         for (int y = 0; y < height; y++) {
             int offset = y * width;
+
             for (int x = 0; x < width; x++) {
                 pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
             }
@@ -193,7 +194,6 @@ public class ManualSearch extends AppCompatActivity {
     public static void getItem(Context context, String barcode, ExpirationTable expirationTable, VolleyCallBack volleyCallBack) {
         Intent intent = new Intent(context, ManualSearch.class);
 
-        ManualSearch.context = context;
         ManualSearch.barcode = barcode;
         ManualSearch.expirationTable = expirationTable;
         ManualSearch.callBack = volleyCallBack;
