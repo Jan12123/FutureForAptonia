@@ -9,20 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.aptonia.builder.Builder;
 import com.example.aptonia.cloud.VolleyCallBack;
 import com.example.aptonia.cloud.WebLoader;
 import com.example.aptonia.expirationTable.ExpirationTable;
-import com.example.aptonia.manualSearch.ManualSearch;
+import com.example.aptonia.manualSearch.ManualSearchActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
@@ -32,7 +28,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -66,7 +61,7 @@ public class BarcodeActivity extends AppCompatActivity implements ZXingScannerVi
         manualSearchButton = findViewById(R.id.barcode_activity_manual_search_button);
 
         // Open manual search activity in case it is not possible to detect code or the product is not in database
-        manualSearchButton.setOnClickListener(v1 -> ManualSearch.getItem(BarcodeActivity.this, barcodeData, expirationTable, new VolleyCallBack() {
+        manualSearchButton.setOnClickListener(v1 -> ManualSearchActivity.getItem(BarcodeActivity.this, barcodeData, expirationTable, new VolleyCallBack() {
             @Override
             public void onSuccess(Object... o) {
                 Builder.DIALOG.addItemDialog(BarcodeActivity.this, o[0].toString(), o[1].toString(), "", new VolleyCallBack() {

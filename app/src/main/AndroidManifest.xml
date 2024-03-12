@@ -54,7 +54,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".manualSearch.ManualSearch"
+            android:name=".manualSearch.ManualSearchActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

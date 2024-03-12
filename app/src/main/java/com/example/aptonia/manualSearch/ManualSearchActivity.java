@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.example.aptonia.BarcodeActivity;
 import com.example.aptonia.R;
 import com.example.aptonia.cloud.VolleyCallBack;
 import com.example.aptonia.expirationTable.ExpirationTable;
@@ -32,7 +31,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 // In case product cannot be scanned, it is possible to find it manually via this activity
-public class ManualSearch extends AppCompatActivity {
+public class ManualSearchActivity extends AppCompatActivity {
 
     private static String barcode;
     private static ExpirationTable expirationTable;
@@ -188,15 +187,15 @@ public class ManualSearch extends AppCompatActivity {
 
         finish();
 
-        Animatoo.INSTANCE.animateZoom(ManualSearch.this);
+        Animatoo.INSTANCE.animateZoom(ManualSearchActivity.this);
     }
 
     public static void getItem(Context context, String barcode, ExpirationTable expirationTable, VolleyCallBack volleyCallBack) {
-        Intent intent = new Intent(context, ManualSearch.class);
+        Intent intent = new Intent(context, ManualSearchActivity.class);
 
-        ManualSearch.barcode = barcode;
-        ManualSearch.expirationTable = expirationTable;
-        ManualSearch.callBack = volleyCallBack;
+        ManualSearchActivity.barcode = barcode;
+        ManualSearchActivity.expirationTable = expirationTable;
+        ManualSearchActivity.callBack = volleyCallBack;
 
         context.startActivity(intent);
 
