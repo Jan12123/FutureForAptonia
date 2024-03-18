@@ -22,8 +22,6 @@ import java.util.Arrays;
 
 public class StartLoadingActivity extends AppCompatActivity {
 
-    // String appToken = "eLtDxqLTT4GdYe103USZ3F:APA91bGez3Kks9-K2S1q4cOT6TLmdFzk5cg2wfgrxXvTppxJq48cdtdkzUBIUix13v4zcbw6TM428iuLolh2ekA2doYP_nla3S9hSrfsYIc3lWj2CxRZgCfUIbewWdzcKGjNpCkbYeT6";
-
     public static String appVersionName = "Farewell";
     public static String appVersionID = "1.4.0"; // month - year - index (from 0)
     public static String mobileID = "263b7f7ef76e08eb"; // aka password
