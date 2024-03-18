@@ -28,7 +28,7 @@ public class StartLoadingActivity extends AppCompatActivity {
     public static String appVersionID = "1.4.0"; // month - year - index (from 0)
     public static String mobileID = "263b7f7ef76e08eb"; // aka password
 
-    String securityURL = "https://script.google.com/macros/s/AKfycbzQr5SsqLS2OdiPMidd5Au33f7ACSf0Fra53VeWtpruD5bYJOKbDcOwLMDD3MGRSOZGNg/exec";
+    String securityURL = "XXX.XXX";
     String cloudURL;
 
     String items;
